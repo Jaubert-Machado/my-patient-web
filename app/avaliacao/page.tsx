@@ -104,7 +104,7 @@ export default function AvaliacaoPage() {
     async function evaluate() {
       setIsEvaluating(true)
       try {
-        const res = await fetch(`/api/agents/evaluate`, {
+        const res = await fetch(`/backend/agents/evaluate`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           credentials: 'include',
@@ -160,7 +160,7 @@ export default function AvaliacaoPage() {
     setIsChatting(true)
 
     try {
-      const res = await fetch(`/api/agents/evaluate`, {
+      const res = await fetch(`/backend/agents/evaluate`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include',

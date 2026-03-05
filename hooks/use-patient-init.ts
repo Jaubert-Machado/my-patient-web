@@ -9,7 +9,7 @@ export function usePatientInit() {
   const { isLoading } = useQuery({
     queryKey: ['patient-init'],
     queryFn: async () => {
-      const res = await fetch(`/api/agents/patient/init`, {
+      const res = await fetch(`/backend/agents/patient/init`, {
         method: 'POST',
         credentials: 'include',
       })

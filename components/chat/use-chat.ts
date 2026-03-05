@@ -49,7 +49,7 @@ export function useChat({
     setIsStreaming(true)
 
     try {
-      const res = await fetch(`/api${endpoint}`, {
+      const res = await fetch(`/backend${endpoint}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include',
