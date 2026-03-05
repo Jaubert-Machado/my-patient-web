@@ -4,7 +4,7 @@ import { useQuery } from '@tanstack/react-query'
 import { useSession } from '@/contexts/session-context'
 
 export function usePatientInit() {
-  const { patientFicha, setPatientFicha, setPatientSystemPrompt } = useSession()
+  const { caseId, setPatientFicha, setCaseId } = useSession()
 
   const { isLoading } = useQuery({
     queryKey: ['patient-init'],
@@ -15,10 +15,10 @@ export function usePatientInit() {
       })
       const data = await res.json()
       setPatientFicha(data.ficha)
-      setPatientSystemPrompt(data.systemPrompt)
+      setCaseId(data.caseId)
       return data
     },
-    enabled: !patientFicha,
+    enabled: !caseId,
     staleTime: Infinity,
     retry: false,
   })

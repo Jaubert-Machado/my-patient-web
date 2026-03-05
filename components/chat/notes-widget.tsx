@@ -161,12 +161,12 @@ function NotesInput() {
           onChange={handleInputChange}
           onKeyDown={handleInputKeyDown}
           placeholder="Escrever anotação..."
-          className="h-7 flex-1 text-xs"
+          className="h-10 flex-1 text-xs"
         />
         <Button
           variant="ghost"
           size="icon"
-          className="text-muted-foreground hover:text-foreground h-7 w-7 shrink-0 disabled:opacity-30"
+          className="text-muted-foreground hover:text-foreground h-10 w-10 shrink-0 disabled:opacity-30"
           onClick={handleSubmitNote}
           disabled={!inputText.trim()}
         >
@@ -369,7 +369,7 @@ export function NotesWidget() {
       <div
         ref={widgetRef}
         className={cn(
-          'bg-background/80 border-border/50 pointer-events-auto fixed top-0 left-0 z-9999 w-72 overflow-hidden border shadow-xl backdrop-blur-md',
+          'bg-background/80 border-border/50 pointer-events-auto fixed z-9999 w-80 overflow-hidden border shadow-xl backdrop-blur-md',
           'flex flex-col-reverse rounded-2xl'
         )}
       >

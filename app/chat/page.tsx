@@ -20,7 +20,7 @@ export default function ChatPage() {
     isFinished,
     finish,
     patientFicha,
-    patientSystemPrompt,
+    caseId,
   } = useSession()
 
   const { isLoading: isLoadingCase } = usePatientInit()
@@ -29,8 +29,8 @@ export default function ChatPage() {
   const fichaWrapperRef = useRef<HTMLDivElement>(null)
 
   const extraBody = useMemo(
-    () => (patientSystemPrompt ? { systemPrompt: patientSystemPrompt } : undefined),
-    [patientSystemPrompt],
+    () => (caseId ? { caseId } : undefined),
+    [caseId],
   )
 
   function handleFinish() {

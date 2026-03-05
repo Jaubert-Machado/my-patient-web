@@ -1,6 +1,6 @@
 'use client'
 
-import { createContext, Dispatch, SetStateAction, useContext, useState } from 'react'
+import {createContext, Dispatch, ReactNode, SetStateAction, useContext, useState} from 'react'
 import type { Message } from '@/components/chat'
 
 export interface PatientFicha {
@@ -17,39 +17,23 @@ interface SessionContextValue {
   labMessages: Message[]
   isFinished: boolean
   patientFicha: PatientFicha | null
-  patientSystemPrompt: string | null
+  caseId: string | null
   setPatientMessages: Dispatch<SetStateAction<Message[]>>
   setLabMessages: Dispatch<SetStateAction<Message[]>>
   setPatientFicha: Dispatch<SetStateAction<PatientFicha | null>>
-  setPatientSystemPrompt: Dispatch<SetStateAction<string | null>>
+  setCaseId: Dispatch<SetStateAction<string | null>>
   finish: () => void
   reset: () => void
 }
 
 const SessionContext = createContext<SessionContextValue | null>(null)
 
-export function SessionProvider({ children }: { children: React.ReactNode }) {
+export function SessionProvider({ children }: { children: ReactNode }) {
   const [patientMessages, setPatientMessages] = useState<Message[]>([])
   const [labMessages, setLabMessages] = useState<Message[]>([])
   const [isFinished, setIsFinished] = useState(false)
-  const [patientFicha, setPatientFicha] = useState<PatientFicha | null>(
-    process.env.NEXT_PUBLIC_MOCK_PATIENT === 'true'
-      ? {
-          nome: 'João Silva',
-          idade: 52,
-          profissao: 'Professor',
-          queixa_principal: 'dor no peito há 3 horas',
-          tempo_sintomas: '3 horas',
-          contexto:
-            'Paciente chega ao pronto-socorro com dor torácica em aperto, irradiando para o braço esquerdo, acompanhada de sudorese fria e náusea leve.',
-        }
-      : null,
-  )
-  const [patientSystemPrompt, setPatientSystemPrompt] = useState<string | null>(
-    process.env.NEXT_PUBLIC_MOCK_PATIENT === 'true'
-      ? 'Você é João Silva, 52 anos, professor hipertenso. Tem dor no peito há 3 horas.'
-      : null,
-  )
+  const [patientFicha, setPatientFicha] = useState<PatientFicha | null>(null)
+  const [caseId, setCaseId] = useState<string | null>(null)
 
   function finish() {
     setIsFinished(true)
@@ -60,7 +44,7 @@ export function SessionProvider({ children }: { children: React.ReactNode }) {
     setLabMessages([])
     setIsFinished(false)
     setPatientFicha(null)
-    setPatientSystemPrompt(null)
+    setCaseId(null)
   }
 
   return (
@@ -70,11 +54,11 @@ export function SessionProvider({ children }: { children: React.ReactNode }) {
         labMessages,
         isFinished,
         patientFicha,
-        patientSystemPrompt,
+        caseId,
         setPatientMessages,
         setLabMessages,
         setPatientFicha,
-        setPatientSystemPrompt,
+        setCaseId,
         finish,
         reset,
       }}
