@@ -3,7 +3,6 @@
 import { useRef, useState } from 'react'
 import { useGSAP } from '@gsap/react'
 import gsap from 'gsap'
-import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { Eye, EyeOff, Loader2 } from 'lucide-react'
 import { FaApple, FaGoogle } from 'react-icons/fa'
@@ -110,14 +109,14 @@ export default function LoginPage() {
             </div>
           </div>
 
-          <div className="flex justify-end">
-            <Link
-              href="/forgot-password"
-              className="text-muted-foreground hover:text-foreground text-xs hover:underline"
-            >
-              Esqueceu sua senha?
-            </Link>
-          </div>
+          {/*<div className="flex justify-end">*/}
+          {/*  <Link*/}
+          {/*    href="/forgot-password"*/}
+          {/*    className="text-muted-foreground hover:text-foreground text-xs hover:underline"*/}
+          {/*  >*/}
+          {/*    Esqueceu sua senha?*/}
+          {/*  </Link>*/}
+          {/*</div>*/}
 
           <Button type="submit" className="w-full rounded-xl" disabled={isDisabled}>
             {isLoading ? (
@@ -162,12 +161,12 @@ export default function LoginPage() {
           </Button>
         </div>
 
-        <p className="text-muted-foreground text-center text-sm">
-          Não tem conta?{' '}
-          <Link href="/register" className="text-foreground font-medium hover:underline">
-            Criar conta
-          </Link>
-        </p>
+        {/*<p className="text-muted-foreground text-center text-sm">*/}
+        {/*  Não tem conta?{' '}*/}
+        {/*  <Link href="/register" className="text-foreground font-medium hover:underline">*/}
+        {/*    Criar conta*/}
+        {/*  </Link>*/}
+        {/*</p>*/}
       </div>
     </div>
   )
