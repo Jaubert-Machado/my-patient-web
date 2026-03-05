@@ -12,6 +12,7 @@ export interface ChatWindowProps {
   setMessages?: React.Dispatch<React.SetStateAction<Message[]>>
   disabled?: boolean
   extraBody?: Record<string, unknown>
+  markdown?: boolean
 }
 
 export function ChatWindow({
@@ -21,6 +22,7 @@ export function ChatWindow({
   setMessages,
   disabled,
   extraBody,
+  markdown,
 }: ChatWindowProps) {
   const {
     messages: chatMessages,
@@ -30,7 +32,7 @@ export function ChatWindow({
 
   return (
     <div className={cn('flex flex-col overflow-hidden', className)}>
-      <MessageList messages={chatMessages} />
+      <MessageList messages={chatMessages} markdown={markdown} />
       <ChatInput onSend={sendMessage} disabled={isStreaming || disabled} />
     </div>
   )

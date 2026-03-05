@@ -11,12 +11,40 @@ interface MessageBubbleProps {
   message: Message
   userIcon?: LucideIcon
   assistantIcon?: LucideIcon
+  markdown?: boolean
+}
+
+function renderMarkdownContent(content: string) {
+  const lines = content.split('\n').filter((l) => l.trim() !== '')
+  const items = lines.filter((l) => l.trimStart().startsWith('- '))
+  const others = lines.filter((l) => !l.trimStart().startsWith('- '))
+
+  return (
+    <>
+      {others.map((line, i) => (
+        <p key={i} className="mb-1">
+          {line}
+        </p>
+      ))}
+      {items.length > 0 && (
+        <ul className="space-y-1">
+          {items.map((item, i) => (
+            <li key={i} className="flex gap-2">
+              <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-current opacity-60" />
+              <span>{item.replace(/^-\s*/, '')}</span>
+            </li>
+          ))}
+        </ul>
+      )}
+    </>
+  )
 }
 
 export function MessageBubble({
   message,
   userIcon: UserIcon = User,
   assistantIcon: AssistantIcon = Bot,
+  markdown,
 }: MessageBubbleProps) {
   const isUser = message.role === 'user'
   const bubbleBoxRef = useRef<HTMLDivElement>(null)
@@ -74,12 +102,16 @@ export function MessageBubble({
       >
         {words.length > 0 ? (
           <div ref={contentRef}>
-            {words.map((word, i) => (
-              <span key={i} className="word-span inline">
-                {word}
-                {i < words.length - 1 && ' '}
-              </span>
-            ))}
+            {markdown ? (
+              renderMarkdownContent(message.content)
+            ) : (
+              words.map((word, i) => (
+                <span key={i} className="word-span inline">
+                  {word}
+                  {i < words.length - 1 && ' '}
+                </span>
+              ))
+            )}
           </div>
         ) : (
           <Loader2 className="h-3.5 w-3.5 animate-spin opacity-50" />

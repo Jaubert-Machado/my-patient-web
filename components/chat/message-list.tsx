@@ -8,7 +8,7 @@ import { MessageBubble } from './message-bubble'
 import { SelectionPopover } from './selection-popover'
 import type { Message } from './use-chat'
 
-export function MessageList({ messages }: { messages: Message[] }) {
+export function MessageList({ messages, markdown }: { messages: Message[]; markdown?: boolean }) {
   const wrapperRef = useRef<HTMLDivElement>(null)
   const contentRef = useRef<HTMLDivElement>(null)
   const lenisRef = useRef<Lenis | null>(null)
@@ -57,7 +57,7 @@ export function MessageList({ messages }: { messages: Message[] }) {
         )}
 
         {messages.map((msg, i) => (
-          <MessageBubble key={i} message={msg} />
+          <MessageBubble key={i} message={msg} markdown={markdown} />
         ))}
       </div>
     </div>
