@@ -23,8 +23,6 @@ interface ChatHeaderProps {
 }
 
 export function ChatHeader({
-  labMessages,
-  setLabMessages,
   onFinish,
   onToggleFicha,
   isFinished,
@@ -156,7 +154,7 @@ export function ChatHeader({
       {isStarted && (
         <div className="flex items-center gap-2">
           <div ref={labButtonRef}>
-            <LabSheet messages={labMessages} setMessages={setLabMessages} />
+            <LabSheet />
           </div>
           <div ref={finishButtonRef}>
             <Button

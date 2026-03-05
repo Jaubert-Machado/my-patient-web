@@ -130,4 +130,7 @@
     @apply bg-background text-foreground;
     background-image: var(--bg-gradient);
   }
+  button, [role="button"] {
+    cursor: pointer;
+  }
 }
