@@ -5,6 +5,7 @@ import { useGSAP } from '@gsap/react'
 import gsap from 'gsap'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
+import { setCookie } from 'cookies-next/client'
 import { Eye, EyeOff, Loader2 } from 'lucide-react'
 import { FaApple, FaGoogle } from 'react-icons/fa'
 import { Button } from '@/components/ui/button'
@@ -55,7 +56,11 @@ export default function LoginPage() {
       }
 
       const { token } = await res.json()
-      document.cookie = `auth_token=${token}; path=/; SameSite=Lax${location.protocol === 'https:' ? '; Secure' : ''}`
+      setCookie('auth_token', token, {
+        path: '/',
+        sameSite: 'lax',
+        secure: location.protocol === 'https:',
+      })
       router.push('/')
     } catch {
       setError('Não foi possível conectar ao servidor.')

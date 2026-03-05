@@ -13,6 +13,7 @@ import { Separator } from '@/components/ui/separator'
 import { MessageList } from '@/components/chat/message-list'
 import { ChatInput } from '@/components/chat/chat-input'
 import { useSession } from '@/contexts/session-context'
+import { getAuthHeaders } from '@/lib/auth'
 import type { Message } from '@/components/chat'
 
 interface EvalCategory {
@@ -106,8 +107,7 @@ export default function AvaliacaoPage() {
       try {
         const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/agents/evaluate`, {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          credentials: 'include',
+          headers: { 'Content-Type': 'application/json', ...getAuthHeaders() },
           body: JSON.stringify({ patientMessages, labMessages }),
         })
 

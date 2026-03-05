@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { getAuthHeaders } from '@/lib/auth'
 
 export interface Message {
   role: 'user' | 'assistant'
@@ -51,8 +52,7 @@ export function useChat({
     try {
       const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}${endpoint}`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        credentials: 'include',
+        headers: { 'Content-Type': 'application/json', ...getAuthHeaders() },
         body: JSON.stringify({ messages: history, ...extraBody }),
       })
 
