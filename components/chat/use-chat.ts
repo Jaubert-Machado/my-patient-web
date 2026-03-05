@@ -49,7 +49,7 @@ export function useChat({
     setIsStreaming(true)
 
     try {
-      const res = await fetch(`/backend${endpoint}`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}${endpoint}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include',

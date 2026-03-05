@@ -41,10 +41,9 @@ export default function LoginPage() {
     setError(null)
 
     try {
-      const res = await fetch(`/backend/auth/login`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        credentials: 'include',
         body: JSON.stringify({ email, password }),
       })
 
@@ -54,6 +53,8 @@ export default function LoginPage() {
         return
       }
 
+      const { token } = await res.json()
+      document.cookie = `auth_token=${token}; path=/; SameSite=Lax${location.protocol === 'https:' ? '; Secure' : ''}`
       router.push('/')
     } catch {
       setError('Não foi possível conectar ao servidor.')
