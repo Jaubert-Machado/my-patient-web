@@ -12,6 +12,7 @@ import { Badge } from '@/components/ui/badge'
 import { Separator } from '@/components/ui/separator'
 import { MessageList } from '@/components/chat/message-list'
 import { ChatInput } from '@/components/chat/chat-input'
+import { useQueryClient } from '@tanstack/react-query'
 import { useSession } from '@/contexts/session-context'
 import { getAuthHeaders } from '@/lib/auth'
 import type { Message } from '@/components/chat'
@@ -68,7 +69,8 @@ function ScoreCard({
 
 export default function AvaliacaoPage() {
   const router = useRouter()
-  const { patientMessages, labMessages, isFinished, reset } = useSession()
+  const { patientMessages, labMessages, isFinished, caseId, reset } = useSession()
+  const queryClient = useQueryClient()
 
   const [evaluation, setEvaluation] = useState<EvaluationResult | null>(null)
   const [isEvaluating, setIsEvaluating] = useState(false)
@@ -216,7 +218,15 @@ export default function AvaliacaoPage() {
     }
   }
 
-  function handleReset() {
+  async function handleReset() {
+    if (caseId) {
+      await fetch(`${process.env.NEXT_PUBLIC_API_URL}/agents/patient/complete`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', ...getAuthHeaders() },
+        body: JSON.stringify({ caseId }),
+      })
+    }
+    await queryClient.invalidateQueries({ queryKey: ['patient-init'] })
     reset()
     router.push('/chat')
   }
