@@ -5,7 +5,7 @@ import { useSession } from '@/contexts/session-context'
 import { getAuthHeaders } from '@/lib/auth'
 
 export function usePatientInit() {
-  const { caseId, setPatientFicha, setCaseId, setPatientMessages, startConsultation } = useSession()
+  const { caseId, setPatientFicha, setCaseId, setPatientMessages, setLabMessages, setPhysicalMessages, startConsultation } = useSession()
 
   const { isLoading } = useQuery({
     queryKey: ['patient-init'],
@@ -17,8 +17,10 @@ export function usePatientInit() {
       const data = await res.json()
       setPatientFicha(data.ficha)
       setCaseId(data.caseId)
-      if (data.isResuming && data.patientMessages?.length > 0) {
-        setPatientMessages(data.patientMessages)
+      if (data.isResuming) {
+        if (data.patientMessages?.length > 0) setPatientMessages(data.patientMessages)
+        if (data.labMessages?.length > 0) setLabMessages(data.labMessages)
+        if (data.physicalMessages?.length > 0) setPhysicalMessages(data.physicalMessages)
         startConsultation()
       }
       return data
