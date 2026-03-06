@@ -18,13 +18,14 @@ export default function ChatPage() {
     labMessages,
     setLabMessages,
     isFinished,
+    isConsultationStarted,
+    startConsultation,
     finish,
     patientFicha,
     caseId,
   } = useSession()
 
   const { isLoading: isLoadingCase } = usePatientInit()
-  const [isConsultationStarted, setIsConsultationStarted] = useState(false)
   const [isFichaVisible, setIsFichaVisible] = useState(false)
   const fichaWrapperRef = useRef<HTMLDivElement>(null)
 
@@ -39,7 +40,7 @@ export default function ChatPage() {
   }
 
   function handleStart() {
-    setIsConsultationStarted(true)
+    startConsultation()
     setIsFichaVisible(false)
   }
 

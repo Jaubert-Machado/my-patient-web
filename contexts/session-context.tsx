@@ -17,6 +17,7 @@ interface SessionContextValue {
   labMessages: Message[]
   physicalMessages: Message[]
   isFinished: boolean
+  isConsultationStarted: boolean
   patientFicha: PatientFicha | null
   caseId: string | null
   setPatientMessages: Dispatch<SetStateAction<Message[]>>
@@ -24,6 +25,7 @@ interface SessionContextValue {
   setPhysicalMessages: Dispatch<SetStateAction<Message[]>>
   setPatientFicha: Dispatch<SetStateAction<PatientFicha | null>>
   setCaseId: Dispatch<SetStateAction<string | null>>
+  startConsultation: () => void
   finish: () => void
   reset: () => void
 }
@@ -35,8 +37,13 @@ export function SessionProvider({ children }: { children: ReactNode }) {
   const [labMessages, setLabMessages] = useState<Message[]>([])
   const [physicalMessages, setPhysicalMessages] = useState<Message[]>([])
   const [isFinished, setIsFinished] = useState(false)
+  const [isConsultationStarted, setIsConsultationStarted] = useState(false)
   const [patientFicha, setPatientFicha] = useState<PatientFicha | null>(null)
   const [caseId, setCaseId] = useState<string | null>(null)
+
+  function startConsultation() {
+    setIsConsultationStarted(true)
+  }
 
   function finish() {
     setIsFinished(true)
@@ -47,6 +54,7 @@ export function SessionProvider({ children }: { children: ReactNode }) {
     setLabMessages([])
     setPhysicalMessages([])
     setIsFinished(false)
+    setIsConsultationStarted(false)
     setPatientFicha(null)
     setCaseId(null)
   }
@@ -58,6 +66,7 @@ export function SessionProvider({ children }: { children: ReactNode }) {
         labMessages,
         physicalMessages,
         isFinished,
+        isConsultationStarted,
         patientFicha,
         caseId,
         setPatientMessages,
@@ -65,6 +74,7 @@ export function SessionProvider({ children }: { children: ReactNode }) {
         setPhysicalMessages,
         setPatientFicha,
         setCaseId,
+        startConsultation,
         finish,
         reset,
       }}
