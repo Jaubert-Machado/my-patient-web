@@ -3,7 +3,8 @@
 import { useRef, useState, useEffect } from 'react'
 import { useGSAP } from '@gsap/react'
 import gsap from 'gsap'
-import { Bot, Stethoscope, FileText } from 'lucide-react'
+import { Stethoscope, FileText } from 'lucide-react'
+import { PatientAvatar } from '@/components/chat/patient-avatar'
 import { Button } from '@/components/ui/button'
 import { LabSheet } from '@/components/chat/lab-sheet'
 import { type Dispatch, type SetStateAction } from 'react'
@@ -20,6 +21,8 @@ interface ChatHeaderProps {
   isStarted: boolean
   isFichaOpen: boolean
   patientName?: string | null
+  patientIdade?: number | null
+  patientSexo?: 'masculino' | 'feminino' | null
 }
 
 export function ChatHeader({
@@ -30,10 +33,13 @@ export function ChatHeader({
   isStarted,
   isFichaOpen,
   patientName,
+  patientIdade,
+  patientSexo,
 }: ChatHeaderProps) {
   const containerRef = useRef<HTMLDivElement>(null)
   const dotRef = useRef<HTMLSpanElement>(null)
   const dotRingRef = useRef<HTMLSpanElement>(null)
+  const fichaButtonRef = useRef<HTMLDivElement>(null)
   const labButtonRef = useRef<HTMLDivElement>(null)
   const finishButtonRef = useRef<HTMLDivElement>(null)
   const statusRef = useRef<HTMLSpanElement>(null)
@@ -92,6 +98,16 @@ export function ChatHeader({
   useGSAP(
     () => {
       if (!isStarted) return
+      gsap.from(fichaButtonRef.current, {
+        width: 0,
+        opacity: 0,
+        overflow: 'hidden',
+        duration: 0.32,
+        ease: 'power2.out',
+        onComplete() {
+          gsap.set(fichaButtonRef.current, { width: 'auto', overflow: '' })
+        },
+      })
       gsap.from([labButtonRef.current, finishButtonRef.current], {
         opacity: 0,
         x: 8,
@@ -110,18 +126,22 @@ export function ChatHeader({
     >
       <div className="flex items-center gap-3">
         {isStarted && (
+          <div ref={fichaButtonRef} className="overflow-hidden">
             <Button
-
-                variant="outline"
-                onClick={onToggleFicha}
-                className={cn('rounded-xl', isFichaOpen && 'bg-muted')}
+              variant="outline"
+              onClick={onToggleFicha}
+              className={cn('rounded-xl', isFichaOpen && 'bg-muted')}
             >
               <FileText className="h-4 w-4" />
               Ficha
             </Button>
+          </div>
         )}
         <div className="bg-muted border-border/60 relative flex h-9 w-9 items-center justify-center rounded-xl border shadow-inner">
-          <Bot className="text-foreground/70 h-4 w-4" />
+          {patientIdade != null && patientSexo != null
+            ? <PatientAvatar idade={patientIdade} sexo={patientSexo} size="sm" className="text-foreground/70" />
+            : <PatientAvatar idade={30} sexo="masculino" size="sm" className="text-foreground/70" />
+          }
           {!isFinished && (
             <span className="absolute -right-1 -top-1 flex h-3 w-3 items-center justify-center">
               <span

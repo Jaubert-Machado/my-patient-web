@@ -6,6 +6,7 @@ import type { Message } from '@/components/chat'
 export interface PatientFicha {
   nome: string
   idade: number
+  sexo: 'masculino' | 'feminino'
   profissao: string
   queixa_principal: string
   tempo_sintomas: string

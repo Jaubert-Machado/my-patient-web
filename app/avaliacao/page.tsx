@@ -374,7 +374,6 @@ export default function AvaliacaoPage() {
                     </div>
                   </CardContent>
                 </Card>
-
                 <Card className="border-border/50 rounded-2xl bg-transparent shadow-none backdrop-blur-sm">
                   <CardHeader className="pb-3">
                     <CardTitle className="text-[13px] font-semibold tracking-tight">

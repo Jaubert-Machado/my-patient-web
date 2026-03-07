@@ -198,13 +198,13 @@ const FLOAT_MARGIN = 16
 
 export function NotesWidget() {
   const [isExpanded, setIsExpanded] = useState(true)
-  const [isFloating, setIsFloating] = useState(true)
+  const [isFloating, setIsFloating] = useState(false)
   const widgetRef = useRef<HTMLDivElement>(null)
   const headerRef = useRef<HTMLDivElement>(null)
   const bodyRef = useRef<HTMLDivElement>(null)
   const listContainerRef = useRef<HTMLDivElement>(null)
   const initializedRef = useRef(false)
-  const isFloatingRef = useRef(true)
+  const isFloatingRef = useRef(false)
   const draggableRef = useRef<Draggable | null>(null)
   const prevListHeightRef = useRef(0)
 
@@ -251,8 +251,9 @@ export function NotesWidget() {
     if (!element || !header) return
 
     gsap.set(element, {
-      top: window.innerHeight - element.offsetHeight - FLOAT_MARGIN,
+      bottom: FLOAT_MARGIN,
       left: FLOAT_MARGIN,
+      top: 'auto',
     })
 
     prevListHeightRef.current = listContainerRef.current?.scrollHeight ?? 0
@@ -270,7 +271,16 @@ export function NotesWidget() {
       inertia: false,
     })
 
+    draggable.disable()
+
     draggableRef.current = draggable
+
+    gsap.from(element, {
+      y: 16,
+      opacity: 0,
+      duration: 0.45,
+      ease: 'power3.out',
+    })
   }, [])
 
   useGSAP(
@@ -368,6 +378,7 @@ export function NotesWidget() {
     <DismissableLayerBranch>
       <div
         ref={widgetRef}
+        style={{ bottom: FLOAT_MARGIN, left: FLOAT_MARGIN }}
         className={cn(
           'bg-background/80 border-border/50 pointer-events-auto fixed z-9999 w-80 overflow-hidden border shadow-xl backdrop-blur-md',
           'flex flex-col-reverse rounded-2xl'

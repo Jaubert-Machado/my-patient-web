@@ -3,7 +3,8 @@
 import { useRef } from 'react'
 import { useGSAP } from '@gsap/react'
 import gsap from 'gsap'
-import { UserRound, Clock, AlertCircle, Stethoscope, Loader2 } from 'lucide-react'
+import { Clock, AlertCircle, Stethoscope, Loader2 } from 'lucide-react'
+import { PatientAvatar } from '@/components/chat/patient-avatar'
 import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
 import type { PatientFicha as PatientFichaType } from '@/contexts/session-context'
@@ -53,10 +54,7 @@ export function PatientFile({ ficha, isLoading, variant = 'centered', onStart }:
   if (isLoading) {
     return (
       <div className="flex flex-1 items-center justify-center">
-        <div className="flex flex-col items-center gap-3">
-          <Loader2 className="text-muted-foreground h-6 w-6 animate-spin" />
-          <p className="text-muted-foreground text-sm">Gerando caso clínico...</p>
-        </div>
+        <Loader2 className="text-muted-foreground h-6 w-6 animate-spin" />
       </div>
     )
   }
@@ -71,7 +69,7 @@ export function PatientFile({ ficha, isLoading, variant = 'centered', onStart }:
       >
         <div className="flex items-center gap-3">
           <div className="bg-muted border-border/60 flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border shadow-inner">
-            <UserRound className="text-foreground/70 h-4 w-4" />
+            <PatientAvatar idade={ficha.idade} sexo={ficha.sexo} size="md" className="text-foreground/70" />
           </div>
           <div>
             <h2 className="text-foreground text-[13px] font-semibold tracking-tight">{ficha.nome}</h2>
@@ -118,7 +116,7 @@ export function PatientFile({ ficha, isLoading, variant = 'centered', onStart }:
       <div className="bg-background/70 border-border/50 w-full max-w-lg space-y-5 rounded-3xl border p-8 shadow-md backdrop-blur-md">
         <div className="flex items-center gap-4">
           <div className="bg-muted border-border/60 flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl border shadow-inner">
-            <UserRound className="text-foreground/70 h-6 w-6" />
+            <PatientAvatar idade={ficha.idade} sexo={ficha.sexo} size="lg" className="text-foreground/70" />
           </div>
           <div>
             <h2 className="text-foreground text-lg font-semibold tracking-tight">{ficha.nome}</h2>

@@ -72,6 +72,8 @@ export default function ChatPage() {
           isStarted={isConsultationStarted}
           isFichaOpen={isFichaVisible}
           patientName={patientFicha?.nome ?? null}
+          patientIdade={patientFicha?.idade ?? null}
+          patientSexo={patientFicha?.sexo ?? null}
         />
 
         {!isConsultationStarted ? (
